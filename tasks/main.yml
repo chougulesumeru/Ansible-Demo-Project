@@ -1,0 +1,9 @@
+#configure tasks file in ansible
+
+
+- name: Update package cache
+  server: localhost
+  become: true
+  tasks:
+      - name: update packages chache
+        update_cache: yes
