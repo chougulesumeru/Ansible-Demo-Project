@@ -1,9 +1,20 @@
 #configure tasks file in ansible
-
-
-- name: Update package cache
-  server: localhost
+---
+- name: Update package cache and setup server
+  hosts: localhost
   become: true
+
   tasks:
-      - name: update packages chache
+    - name: Update package cache
+      apt:
         update_cache: yes
+
+    - name: Install common package
+      apt:
+        name: "{{ install }}"
+        state: present
+
+    - name: Create app user
+      user:
+        name: "{{ db_user }}"
+        state: present
