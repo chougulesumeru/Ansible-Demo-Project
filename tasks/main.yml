@@ -1,20 +1,16 @@
-#configure tasks file in ansible
----
-- name: Update package cache and setup server
-  hosts: localhost
-  become: true
+# configure only tasks 
 
-  tasks:
-    - name: Update package cache
-      apt:
-        update_cache: yes
+--- 
 
-    - name: Install common package
-      apt:
-        name: "{{ install }}"
-        state: present
+- name: install nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+    notify: restart nginx
 
-    - name: Create app user
-      user:
-        name: "{{ db_user }}"
-        state: present
+- name: ensure nginx enabled
+  service:
+    name: nginx
+    state: started
+    enabled: yes
