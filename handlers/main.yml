@@ -1,0 +1,25 @@
+#configure handlers
+---
+- name: configure nginx with handlers
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: ensure nginx is enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        service:
+          name: nginx
+          state: restarted
